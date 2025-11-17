@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 
 object TransactionParser {
     private val PATTERN = Pattern.compile(
-        "(?:Sent|Received).*UGX\\s*([\\d,]+).*?(\\d{9}).*?Ref[:\\s]*(\\w+)",
+        "(?:Sent|Received|Paid).*?UGX\\s*([\\d,]+(?:\\.\\d{1,2})?)\\s*(?:to|from)\\s*(\\d{9,10}).*?Ref[:\\s]*(\\w+)",
         Pattern.CASE_INSENSITIVE or Pattern.DOTALL
     )
 

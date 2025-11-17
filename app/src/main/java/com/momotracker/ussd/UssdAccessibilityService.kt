@@ -4,13 +4,17 @@ import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.momotracker.data.TransactionRepository
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class UssdAccessibilityService : AccessibilityService() {
 
-    private lateinit var repo: TransactionRepository
+    @Inject
+    lateinit var repo: TransactionRepository
 
     override fun onServiceConnected() {
         super.onServiceConnected()
