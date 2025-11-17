@@ -15,15 +15,17 @@ object CategoryClassifier {
     private const val CONFIDENCE_THRESHOLD = 0.7f
 
     // === UGANDA-SPECIFIC KEYWORDS (case-insensitive) ===
-    private val KEYWORDS = mapOf(
+    private val KEYWORDS = mutableMapOf(
         "Airtime" to listOf("airtime", "top up", "bundle", "data", "voice"),
         "Transport" to listOf("boda", "taxi", "uber", "safeboda", "fuel", "stage"),
         "School Fees" to listOf("school", "tuition", "fees", "term", "pta", "nakasero", "kisubi"),
         "Food" to listOf("food", "lunch", "chicken", "chapati", "posho", "matooke", "restaurant"),
         "Rent" to listOf("rent", "house", "landlord", "apartment", "kira", "ntinda"),
         "Medical" to listOf("hospital", "clinic", "medicine", "pharmacy", "mulago", "nsambya"),
-        "Savings" to listOf("save", "sacco", "welfare", "group", "contribution")
-    )
+        "Savings" to listOf("save", "sacco", "welfare", "group", "contribution")).toMutableMap()
+
+    KEYWORDS["Airtime"] = listOf("airtime", "top up", "bundle", "data", "voice")
+    KEYWORDS["School Fees"] = listOf("school", "tuition", "fees", "term", "pta", "nakasero", "kisubi")
 
     private var interpreter: Interpreter? = null
 
