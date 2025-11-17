@@ -7,6 +7,7 @@ import java.nio.channels.FileChannel
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.util.*
 
 object CategoryClassifier {
 
@@ -46,10 +47,47 @@ object CategoryClassifier {
         }
 
         // 2. TensorFlow Lite model classification (more accurate but slower)
-        // TODO: Implement TFLite model classification
+        val inputBuffer = ByteBuffer.allocateDirect(MAX_LEN * 4)
+        inputBuffer.order(ByteOrder.nativeOrder())
+        inputBuffer.rewind()
+        tokenize(text, inputBuffer)
+
+        val outputBuffer = Array(1) { FloatArray(KEYWORDS.size) }
+
+        interpreter?.run(inputBuffer, outputBuffer)
+
+        val results = outputBuffer[0]
+
+        var maxIndex = 0
+        var maxConfidence = 0.0f
+        for (i in results.indices) {
+            if (results[i] > maxConfidence) {
+                maxConfidence = results[i]
+                maxIndex = i
+            }
+        }
+
+        if (maxConfidence > CONFIDENCE_THRESHOLD) {
+            return KEYWORDS.keys.elementAt(maxIndex)
+        }
 
         // 3. Fallback category
         return "Other"
+    }
+
+    private fun tokenize(text: String, inputBuffer: ByteBuffer) {
+        val tokenizer = StringTokenizer(text)
+        var i = 0
+        while (tokenizer.hasMoreTokens() && i < MAX_LEN) {
+            val token = tokenizer.nextToken()
+            val floatValue = token.hashCode().toFloat()
+            inputBuffer.putFloat(i * 4, floatValue)
+            i++
+        }
+        while (i < MAX_LEN) {
+            inputBuffer.putFloat(i * 4, 0.0f)
+            i++
+        }
     }
 
     private fun loadModelFile(context: Context): MappedByteBuffer {
