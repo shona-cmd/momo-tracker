@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.momotracker'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.momotracker"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Enable ML model binding
+        aaptOptions {
+            noCompress "tflite"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
+    implementation 'net.zetetic:android-database-sqlcipher:4.5.4'
+    implementation "net.zetetic:android-database-sqlcipher:4.5.4"
+    kapt 'androidx.room:room-compiler:2.6.1'
+
+    // Gemini Nano via ML Kit
+    implementation "com.google.android.gms:play-services-tflite-gpu:16.0.0"
+    implementation "com.google.android.gms:play-services-tflite-support:16.0.0"
+
+    // Or CPU-only (smaller APK)
+    // implementation "com.google.android.gms:play-services-tflite:16.0.0"
+}
