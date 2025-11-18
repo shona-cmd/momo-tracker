@@ -33,6 +33,26 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.momotracker.feature.payments.PaymentProvider
 import com.momotracker.feature.payments.PaymentState
 import com.momotracker.feature.payments.PaymentViewModel
+import androidx.compose.material.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import android.app.Activity
+import com.momotracker.util.BillingManager
+import com.momotracker.util.PremiumPrefs
+
+@Composable
+fun PremiumButton() {
+    if (!PremiumPrefs.isPremium) {
+        Button(
+            onClick = { BillingManager.launchPremium(LocalContext.current as Activity) },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF3B30))
+        ) {
+            Text("🎄 Unlock Christmas Premium - 70% OFF (Limited!)", color = Color.White)
+        }
+    } else {
+        Text("✨ You have Christmas Premium! Thank you ❤️", color = Color(0xFF34C759))
+        }
+    }
 
 @Composable
 fun PaymentScreen(
@@ -128,5 +148,6 @@ fun PaymentScreen(
             }
             else -> {}
         }
+        PremiumButton()
     }
 }

@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/snow_white"/>
+    <item>
+        <bitmap android:src="@drawable/snowflakes_pattern" android:tileMode="repeat"/>
+    </item>
+</layer-list>
