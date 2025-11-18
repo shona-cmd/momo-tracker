@@ -2,7 +2,7 @@
 
 **Track every MTN & Airtel transaction automatically – even offline!**
 
-[![Made in Uganda](https://img.shields.io/badge/Made%20in-Uganda-%F0%9F%87%BA%F0%9F%87%AC-green?style=for-the-badge)](https://github.com/topics/uganda)
+[![Made in Uganda]https://freeimage.host/i/fJ6KFUP](https://github.com/topics/uganda)
 [![Stars](https://img.shields.io/github/stars/YOURUSERNAME/momo_tracker?style=social)](https://github.com/YOURUSERNAME/momo_tracker)
 
 ## Features
