@@ -1,0 +1,12 @@
+# Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+captived_runtime/
+.cxx/
+
+# Android Studio
+.DS_Store
+*.hprof
