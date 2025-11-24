@@ -9,13 +9,13 @@
 - Saves every "You have sent/received" transaction
 - Shows total sent vs received
 - Works 100% offline
-- License protected (UGX 25,000 only)
+- License protected (UGX 5000UGSH only)
 
 ## Demo (15 seconds)
 https://imgur.com/a/momo-tracker-demo ← I will host your video here in 5 mins
 
 ## Buy Full Version
-💸 **UGX 25,000 only**  
+💸 **UGX 5000 only**  
 👉 WhatsApp: wa.me/256YOUR_NUMBER  
 👉 Gumroad coming soon
 
