@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">MomoTracker</string>
-    <string name="accessibility_service_description">MomoTracker USSD Accessibility Service</string>
-    <string name="accessibility_desc">Reads USSD pop-ups to auto-log MoMo transactions.</string>
 </resources>
