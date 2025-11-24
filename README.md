@@ -3,7 +3,7 @@
 **Track every MTN & Airtel transaction automatically – even offline!**
 
 [![Made in Uganda]https://freeimage.host/i/fJ6KFUP](https://github.com/topics/uganda)
-[![Stars](https://img.shields.io/github/stars/YOURUSERNAME/momo_tracker?style=social)](https://github.com/YOURUSERNAME/momo_tracker)
+[![Stars](https://img.shields.io/github/stars/mwanjajoel/momo_tracker?style=social)](https://github.com/YOURUSERNAME/momo_tracker)
 
 ## Features
 - Saves every "You have sent/received" transaction
@@ -12,11 +12,11 @@
 - License protected (UGX 5000UGSH only)
 
 ## Demo (15 seconds)
-https://imgur.com/a/momo-tracker-demo ← I will host your video here in 5 mins
+https://www.youtube.com/watch?v=nDbGR9HNJOc
 
 ## Buy Full Version
 💸 **UGX 5000 only**  
-👉 WhatsApp: wa.me/256YOUR_NUMBER  
+👉 WhatsApp: wa.me/+256700000000
 👉 Gumroad coming soon
 
 Made with ❤️ in Kampala
