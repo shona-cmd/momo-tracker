@@ -16,7 +16,7 @@ https://imgur.com/a/momo-tracker-demo ← I will host your video here in 5 mins
 
 ## Buy Full Version
 💸 **UGX 5000 only**  
-👉 WhatsApp: wa.me/256YOUR_NUMBER  
+👉 WhatsApp: wa.me/256 761 485613 
 👉 Gumroad coming soon
 
 Made with ❤️ in Kampala
@@ -35,7 +35,7 @@ Made with ❤️ in Kampala
 [![Demo Video](https://img.youtube.com/vi/nDbGR9HNJOc/0.jpg)](https://www.youtube.com/watch?v=nDbGR9HNJOc) ← Quick demo of MoMo transaction tracking (upload your custom video to Imgur/YouTube for exact match)
 ## Buy Full Version
 💸 **UGX 5000 only**
-👉 WhatsApp: wa.me/256772345678 (Replace with your actual number)
+👉 WhatsApp: wa.me256 761 485613 / (Replace with your actual number)
 👉 Gumroad coming soon
 Made with ❤️ in Kampala
 #UgandaTech #MadeInUganda #MomoUganda #KampalaCoders
