@@ -7,6 +7,34 @@ local.properties
 captived_runtime/
 .cxx/
 
+# Existing Android ignores
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/gradle.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+build/
+capture/
+kapt/
+.cxx/
+
+# JDK/Build Artifacts
+*.zip
+src.zip
+modules
+java-*/
+openjdk*/
+jdk*/
+*.tar.gz
+*.dmg
+*.exe  # If any installers
+
+# Logs/Debug
+*.log
+
 # Android Studio
 .DS_Store
 *.hprof
