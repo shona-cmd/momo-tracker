@@ -1,44 +1,41 @@
-# Momo Tracker
+# Momo Tracker: Mobile GitHub Issue Momentum Tracker
 
-Momo Tracker is a lightweight Android app designed to help you effortlessly track your daily expenses, habits, or transactions. Whether you're monitoring mobile money transfers (like MTN MoMo), budgeting for groceries, or logging fitness goals, Momo Tracker keeps everything organized in one place. Built with modern Android practices, it's fast, secure, and privacy-focused.
+Momo Tracker is your pocket-sized companion for GitHub developers. Track issue progress, get real-time notifications for assigned tasks, and visualize repo momentum—all from your Android phone. Built with love for the GitHub community, it integrates seamlessly via OAuth to pull issues, labels, and milestones without leaving your workflow.
 
-## Features
-- **Easy Logging**: Quick-add entries with categories, amounts, and notes.
-- **Visual Insights**: Charts and summaries to see your spending patterns at a glance.
-- **Export Data**: Save reports as CSV for backups or sharing.
-- **Reminders**: Set alerts for recurring tracks (e.g., bill due dates).
-- **Offline-First**: Works without internet; syncs when online (future update).
+## Why Momo Tracker?
+- **Real-Time Tracking**: Syncs GitHub issues/PRs to your device. See assignees, comments, and due dates at a glance.
+- **Momentum Insights**: Gamified streaks for closing issues—stay motivated!
+- **Notifications**: Push alerts for mentions, reviews, or label changes.
+- **Offline Mode**: Cache data for on-the-go tracking.
+- **Secure & Private**: Uses GitHub OAuth; no extra data stored.
 
-## Screenshots
-![Home Screen](screenshots/home.png)  
-![Tracking Log](screenshots/log.png)  
-![Charts](screenshots/charts.png)
+Perfect for solo devs, teams, or open-source contributors. Free forever, with pro features coming soon.
 
-(Add your actual screenshots here once created.)
+## Quick Start
+1. Install from [releases](https://github.com/yourorg/momo-tracker/releases) or Google Play (coming soon).
+2. Grant OAuth access to your repos/orgs.
+3. Track away!
 
-## Tech Stack
-- **Language**: Kotlin
-- **UI**: Jetpack Compose (or XML—update as needed)
-- **Architecture**: MVVM with Room for local DB
-- **Build**: Gradle 8.2.2, AndroidX
+## Pricing
+| Plan | Price | Features |
+|------|-------|----------|
+| Free | $0/mo | Basic tracking for 5 repos, notifications |
+| Pro | $4.99/mo | Unlimited repos, advanced analytics, team sharing |
 
-## Installation
-1. Clone the repo: `git clone https://github.com/yourusername/momo-tracker.git`
-2. Open in Android Studio.
-3. Sync Gradle and build: `./gradlew build`
-4. Install APK on device: `./gradlew installDebug`
+Billed via GitHub Marketplace (monthly/annual). Free trial: 14 days.
 
-For release builds, generate a signed APK/AAB via Android Studio.
+## Support & Contact
+- **Email**: support@momotracker.app
+- **Issues**: [github.com/yourorg/momo-tracker/issues](https://github.com/yourorg/momo-tracker/issues)
+- **Discord**: [discord.gg/momotracker](https://discord.gg/momotracker)
 
-## Contributing
-Pull requests welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+## Privacy Policy
+See [PRIVACY.md](PRIVACY.md) or [momotracker.app/privacy](https://momotracker.app/privacy).
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Terms of Service
+[momotracker.app/tos](https://momotracker.app/tos)
 
-## Support
-- **Email**: support@momotracker.app (replace with yours)
-- **Issues**: File bugs on GitHub
-- **Privacy Policy**: [Link to your policy](https://yourdomain.com/privacy)
+## Installation Stats
+Currently: 150+ installs (beta). Join the momentum!
 
-Built with ❤️ by [Your Name/Org]. Questions? Open an issue!
+Built with ❤️ using Kotlin & Android. Contributions welcome!

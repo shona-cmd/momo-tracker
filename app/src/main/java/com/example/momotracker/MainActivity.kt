@@ -1,31 +1,41 @@
 package com.example.momotracker
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    private lateinit var githubApi: GitHubApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Greeting("Android")
-        }
-    }
+        // ... UI setup
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        githubApi = retrofit.create(GitHubApi::class.java)
+
+        // Example: Fetch issues (use OAuth token from intent)
+        val token = getOAuthToken() // Implement secure storage, e.g., EncryptedSharedPreferences
+        githubApi.getIssues("owner", "repo", token).enqueue(/* handle response */)
 }
 
-@Composable
-fun Greeting(name: String, modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier) {
-    Text(
-        text = "Hello \$name!",
-        modifier = modifier
-    )
+interface GitHubApi {
+    @GET("repos/{owner}/{repo}/issues")
+    fun getIssues(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String,
+        @Header("Authorization") token: String
+    ): Call<List<Issue>> // Define Issue data class
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Greeting("Android")
+data class Issue(val title: String, val state: String, val assignee: Assignee?)
+data class Assignee(val login: String)
 }
