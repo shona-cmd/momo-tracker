@@ -1,0 +1,51 @@
+name: 'Momo Tracker'
+description: 'Track GitHub repo issues and momentum. Sync stats to Android app for notifications (MoMo payments for pro).'
+author: 'shona-cmd'
+inputs:
+  repo-owner:
+    description: 'Repo owner (e.g., your username)'
+    required: true
+    default: 'shona-cmd'
+  repo-name:
+    description: 'Repo name (e.g., momo-tracker)'
+    required: true
+    default: 'momo-tracker'
+  github-token:
+    description: 'GITHUB_TOKEN for API access'
+    required: true
+    default: ${{ github.token }}
+outputs:
+  open-issues:
+    description: 'Number of open issues'
+    value: ${{ steps.track.outputs.open }}
+  closed-issues:
+    description: 'Number of closed issues'
+    value: ${{ steps.track.outputs.closed }}
+  momentum-score:
+    description: 'Simple score: closed / (open + closed) * 100'
+    value: ${{ steps.track.outputs.score }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Track Issues
+      id: track
+      run: |
+        # Fetch issues via GitHub Search API
+        OPEN=$(gh api "/search/issues?q=repo:${{ inputs.repo-owner }}/${{ inputs.repo-name }} is:issue is:open" --jq '.total_count')
+        CLOSED=$(gh api "/search/issues?q=repo:${{ inputs.repo-owner }}/${{ inputs.repo-name }} is:issue is:closed" --jq '.total_count')
+        TOTAL=$((OPEN + CLOSED))
+        if [ $TOTAL -eq 0 ]; then
+          SCORE=0
+        else
+          SCORE=$(echo "scale=2; $CLOSED * 100 / $TOTAL" | bc)
+        fi
+        echo "open=$OPEN" >> $GITHUB_OUTPUT
+        echo "closed=$CLOSED" >> $GITHUB_OUTPUT
+        echo "score=$SCORE" >> $GITHUB_OUTPUT
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+branding:
+  icon: 'activity'  # GitHub icon for tracking
+  color: 'blue'
+version: '1.0.0'  # SemVer for releases

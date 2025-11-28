@@ -7,6 +7,31 @@ from flask import send_file
 
 app = Flask(__name__)
 
+import json
+
+GITHUB_WEBHOOK_SECRET = os.environ.get("SECRET_TOKEN", "your_github_webhook_secret")
+
+@app.route('/payload', methods=['POST'])
+def github_webhook():
+    request.get_data()
+    payload_body = request.data.decode('utf-8')
+    
+    signature = 'sha256=' + hmac.new(
+        GITHUB_WEBHOOK_SECRET.encode('utf-8'),
+        msg=request.data,
+        digestmod=hashlib.sha256
+    ).hexdigest()
+
+    if not hmac.compare_digest(signature, request.headers.get('X-Hub-Signature-256', '')):
+        return "Signatures didn't match!", 400
+
+    try:
+        push = json.loads(payload_body)
+    except json.JSONDecodeError:
+        return "Invalid JSON format", 400
+
+    return "I got some JSON: {}".format(push), 200
+
 # === CONFIG (CHANGE THESE) ===
 MTN_SUBSCRIPTION_KEY = "your_mtn_primary_key_here"
 MTN_SECRET = "your_mtn_webhook_secret_if_any"  # Some environments require it
@@ -85,8 +110,12 @@ def download_apk():
 
 @app.route('/')
 def home():
-    return '''
+    warning = ""
+    if GITHUB_WEBHOOK_SECRET == "your_github_webhook_secret":
+        warning = "<p style='color:red'>WARNING: Please set the GITHUB_WEBHOOK_SECRET environment variable!</p>"
+    return f'''
     <h1>Momo Tracker Pro – Webhook Live</h1>
+    {warning}
     <p>MTN URL: https://your-server.com/mtn-callback</p>
     <p>Airtel URL: https://your-server.com/airtel-callback</p>
     <p>Check payment: /check-payment?phone=075xxxxxxx</p>
