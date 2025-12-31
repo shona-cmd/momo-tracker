@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momotracker.data.AirtelPaymentRepository
 import com.momotracker.data.MtnMomoPaymentRepository
+import com.momotracker.data.YoPaymentRepository
 import com.momotracker.data.AirtelPaymentRequest
 import com.momotracker.data.MtnCollectionRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 sealed class PaymentProvider {
     object MTN : PaymentProvider()
     object Airtel : PaymentProvider()
+    object Yo : PaymentProvider()
 }
 
 sealed class PaymentState {
@@ -28,7 +30,8 @@ sealed class PaymentState {
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
     private val mtnRepo: MtnMomoPaymentRepository,
-    private val airtelRepo: AirtelPaymentRepository
+    private val airtelRepo: AirtelPaymentRepository,
+    private val yoRepo: YoPaymentRepository
 ) : ViewModel() {
 
     var selectedProvider by mutableStateOf<PaymentProvider>(PaymentProvider.MTN)
@@ -45,6 +48,7 @@ class PaymentViewModel @Inject constructor(
         val normalizedPhone = when (selectedProvider) {
             is PaymentProvider.MTN -> "256${phoneNumber.substring(1)}"     // 07xx → 2567xx...
             is PaymentProvider.Airtel -> "256${phoneNumber.substring(1)}"
+            is PaymentProvider.Yo -> "256${phoneNumber.substring(1)}"
         }
 
         state = PaymentState.Loading
@@ -59,6 +63,10 @@ class PaymentViewModel @Inject constructor(
                     phoneNumber = normalizedPhone,
                     amount = "5000"
                 )
+                is PaymentProvider.Yo -> yoRepo.initiatePayment(
+                    phoneNumber = normalizedPhone,
+                    amount = "5000"
+                )
             }
 
             state = result.fold(
@@ -66,9 +74,10 @@ class PaymentViewModel @Inject constructor(
                     val txId = when (selectedProvider) {
                         is PaymentProvider.MTN -> response.financialTransactionId ?: "N/A"
                         is PaymentProvider.Airtel -> response.transaction_id ?: "N/A"
+                        is PaymentProvider.Yo -> response.transactionId
                     }
                     PaymentState.Success(
-                        message = "${if (selectedProvider is PaymentProvider.MTN) "MTN" else "Airtel"} Payment successful! 🎉\nPro features unlocked forever.",
+                        message = "${when (selectedProvider) { is PaymentProvider.MTN -> "MTN"; is PaymentProvider.Airtel -> "Airtel"; is PaymentProvider.Yo -> "Yo"; else -> "" }} Payment successful! 🎉\nPro features unlocked forever.",
                         transactionId = txId
                     )
                 },

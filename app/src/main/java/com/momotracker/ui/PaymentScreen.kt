@@ -87,6 +87,12 @@ fun PaymentScreen(
                 onClick = { viewModel.selectedProvider = PaymentProvider.Airtel }
             )
             Text("Airtel Money", fontSize = 18.sp)
+
+            RadioButton(
+                selected = viewModel.selectedProvider is PaymentProvider.Yo,
+                onClick = { viewModel.selectedProvider = PaymentProvider.Yo }
+            )
+            Text("Yo Uganda", fontSize = 18.sp)
         }
 
         Spacer(Modifier.height(32.dp))
@@ -112,7 +118,7 @@ fun PaymentScreen(
             if (state is PaymentState.Loading) {
                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 Spacer(Modifier.width(12.dp))
-                Text("Processing ${if (viewModel.selectedProvider is PaymentProvider.MTN) "MTN" else "Airtel"}...")
+                Text("Processing ${when (viewModel.selectedProvider) { is PaymentProvider.MTN -> "MTN"; is PaymentProvider.Airtel -> "Airtel"; is PaymentProvider.Yo -> "Yo"; else -> "" }}...")
             } else {
                 Text("Pay 5,000 UGX → Unlock Forever", fontSize = 18.sp)
             }
