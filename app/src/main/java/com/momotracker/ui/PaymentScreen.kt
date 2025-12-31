@@ -22,9 +22,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,8 +41,8 @@ import com.momotracker.feature.payments.PaymentState
 import com.momotracker.feature.payments.PaymentViewModel
 import androidx.compose.material.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import android.app.Activity
+import android.os.Vibrator
 import com.momotracker.util.BillingManager
 import com.momotracker.util.PremiumPrefs
 
@@ -59,6 +65,7 @@ fun PaymentScreen(
     viewModel: PaymentViewModel = hiltViewModel()
 ) {
     val state by viewModel.state
+    var showConfirmationDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -78,19 +85,22 @@ fun PaymentScreen(
         ) {
             RadioButton(
                 selected = viewModel.selectedProvider is PaymentProvider.MTN,
-                onClick = { viewModel.selectedProvider = PaymentProvider.MTN }
+                onClick = { viewModel.selectedProvider = PaymentProvider.MTN },
+                modifier = Modifier.semantics { contentDescription = "Select MTN MoMo as payment provider" }
             )
             Text("MTN MoMo", fontSize = 18.sp)
 
             RadioButton(
                 selected = viewModel.selectedProvider is PaymentProvider.Airtel,
-                onClick = { viewModel.selectedProvider = PaymentProvider.Airtel }
+                onClick = { viewModel.selectedProvider = PaymentProvider.Airtel },
+                modifier = Modifier.semantics { contentDescription = "Select Airtel Money as payment provider" }
             )
             Text("Airtel Money", fontSize = 18.sp)
 
             RadioButton(
                 selected = viewModel.selectedProvider is PaymentProvider.Yo,
-                onClick = { viewModel.selectedProvider = PaymentProvider.Yo }
+                onClick = { viewModel.selectedProvider = PaymentProvider.Yo },
+                modifier = Modifier.semantics { contentDescription = "Select Yo Uganda as payment provider" }
             )
             Text("Yo Uganda", fontSize = 18.sp)
         }
@@ -103,17 +113,21 @@ fun PaymentScreen(
             label = { Text("Phone number (07xxxxxxxx)") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Enter your phone number for payment, format 07xxxxxxxx" }
         )
 
         Spacer(Modifier.height(32.dp))
 
         Button(
-            onClick = { viewModel.pay5000Ugx() },
+            onClick = {
+                vibrator?.vibrate(50)
+                showConfirmationDialog = true
+            },
             enabled = state !is PaymentState.Loading,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
+                .semantics { contentDescription = "Pay 5,000 UGX to unlock Momo Tracker Pro features" }
         ) {
             if (state is PaymentState.Loading) {
                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
@@ -154,6 +168,28 @@ fun PaymentScreen(
             }
             else -> {}
         }
+
+        if (showConfirmationDialog) {
+            AlertDialog(
+                onDismissRequest = { showConfirmationDialog = false },
+                title = { Text("Confirm Payment") },
+                text = { Text("Are you sure you want to pay 5,000 UGX to unlock Momo Tracker Pro? This action cannot be undone.") },
+                confirmButton = {
+                    Button(onClick = {
+                        showConfirmationDialog = false
+                        viewModel.pay5000Ugx()
+                    }) {
+                        Text("Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { showConfirmationDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
+            )
+        }
+
         PremiumButton()
     }
 }

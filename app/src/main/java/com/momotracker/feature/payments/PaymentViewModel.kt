@@ -82,7 +82,12 @@ class PaymentViewModel @Inject constructor(
                     )
                 },
                 onFailure = { e ->
-                    PaymentState.Error(e.message ?: "Payment failed. Try again or send manually to 0745128746")
+                    val errorMessage = when (selectedProvider) {
+                        is PaymentProvider.MTN -> e.message ?: "MTN payment failed. Ensure you have sufficient balance or try again. Contact support if issue persists."
+                        is PaymentProvider.Airtel -> e.message ?: "Airtel payment failed. Ensure you have sufficient balance or try again. Contact support if issue persists."
+                        is PaymentProvider.Yo -> e.message ?: "Yo payment failed. Ensure you have sufficient balance or try again. Contact support if issue persists."
+                    }
+                    PaymentState.Error(errorMessage)
                 }
             )
         }

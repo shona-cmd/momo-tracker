@@ -5,4 +5,4 @@
 - [ ] Implement export data feature
 - [ ] Implement reminders feature
 - [ ] Implement offline-first feature
-- [ ] Integrate Yo Uganda as payment provider for pro features
+- [x] Integrate Yo Uganda as payment provider for pro features
